@@ -2,7 +2,10 @@ import axios from "axios";
 import router from "../router/index.ts";
 //import { useLoginStore } from "@/stores/app-login";
 
-const axiosClient = axios.create()
+const axiosClient = axios.create({
+    baseURL: import.meta.env.VITE_API_BASE_URL
+})
+
 
 axiosClient.interceptors.response.use(response => {
     return response;

@@ -75,8 +75,15 @@ function setModal(modalId) {
   return tmpModal = new Modal(document.getElementById(modalId));
 }
 
+let url = 'index.php';
+let piniaPlugin = (context: PiniaPluginContext) => {
+  return {
+    urlBase: url
+  };
+};
+
 app.config.globalProperties.$toast = toast
-app.config.globalProperties.$baseUrl = 'app/api/index.php'
+app.config.globalProperties.$baseUrl = url
 app.config.globalProperties.setModal = setModal
 app.config.globalProperties.emitter  = emitter;
 app.config.globalProperties.$http    = axiosClient

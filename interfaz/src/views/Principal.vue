@@ -32,12 +32,12 @@ router.afterEach(async (to, from) => {
 
 document.querySelector('body').classList.add('app-init');
 
-/*const store = useLoginStore();
+const store = useLoginStore();
 store.validaToken()
 
 if (!store.isLoggedIn) {
   router.push({ name: 'Login' });
-}*/
+}
 
 </script>
 
