@@ -6,19 +6,6 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {
-    port: 8080,
-    open: true,
-    host: true,
-    proxy: {
-      "/app": {
-        target: "http://localhost/blitz/",
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/app/, ""),
-      }
-    }   
-  },
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
@@ -27,5 +14,5 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ['vue-demi']
-  }
+	}
 });
