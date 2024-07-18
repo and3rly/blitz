@@ -1,17 +1,20 @@
 import { defineStore } from "pinia";
+import axiosCliente from "@/plugins/axios.js" 
 
 export const useAppSidebarMenuStore = defineStore({
   id: "appSidebarMenu",
-  state: () => {
-    return [
-    {
-			text: 'Navigation',
-			is_header: true
-		},
-		{
-      'url': '/',
-      'icon': 'fa fa-home',
-      'text': 'Home'
+  state: () => ({
+    modulos: null,
+    urlBase: ""
+  }),
+  actions: {
+    async get_menu() {
+      await axiosCliente.get(`${this.urlBase}/modulo/get_modulos`)
+      .then (res => {
+        this.modulos = res.data.lista
+      });
     }
-	]}
+  }
 });
+
+useAppSidebarMenuStore().get_menu();

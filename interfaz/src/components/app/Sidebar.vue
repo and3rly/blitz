@@ -181,75 +181,82 @@ function handleGetHiddenMenuHeight(elm) {
 	return targetHeight;
 }
 
+function initMenu() {
+    var handleSidebarMenuToggle = function(menus, expandTime = 300) {
+        menus.forEach(function(menu) {
+            menu.onclick = function(e) {
+                e.preventDefault();
+                var target = this.nextElementSibling;
+
+                // Cerrar otros menús abiertos
+                menus.forEach(function(m) {
+                    var otherTarget = m.nextElementSibling;
+                    if (otherTarget !== target) {
+                        slideUp(otherTarget, expandTime);
+                        otherTarget.closest('.menu-item').classList.remove('expand');
+                        otherTarget.closest('.menu-item').classList.add('closed');
+                    }
+                });
+
+                var targetItemElm = target.closest('.menu-item');
+
+                if (targetItemElm.classList.contains('expand')) {
+                    targetItemElm.classList.remove('expand');
+                    targetItemElm.classList.add('closed');
+                    slideUp(target, expandTime);
+                } else {
+                    targetItemElm.classList.add('expand');
+                    targetItemElm.classList.remove('closed');
+                    slideDown(target, expandTime);
+                }
+            }
+        });
+    };
+
+    var menuBaseSelector = '.app-sidebar .menu > .menu-item.has-sub';
+    var submenuBaseSelector = ' > .menu-submenu > .menu-item.has-sub';
+
+    // Menu
+    var menuLinkSelector = menuBaseSelector + ' > .menu-link';
+    var menus = Array.from(document.querySelectorAll(menuLinkSelector));
+    handleSidebarMenuToggle(menus);
+
+    // Submenu nivel 1
+    var submenuLvl1Selector = menuBaseSelector + submenuBaseSelector;
+    var submenusLvl1 = Array.from(document.querySelectorAll(submenuLvl1Selector + ' > .menu-link'));
+    handleSidebarMenuToggle(submenusLvl1);
+
+    // Submenu nivel 2
+    var submenuLvl2Selector = menuBaseSelector + submenuBaseSelector + submenuBaseSelector;
+    var submenusLvl2 = Array.from(document.querySelectorAll(submenuLvl2Selector + ' > .menu-link'));
+    handleSidebarMenuToggle(submenusLvl2);
+
+    handleSidebarMinifyFloatMenu();
+}
+
 onMounted(() => {
-	var handleSidebarMenuToggle = function(menus, expandTime) {
-		menus.map(function(menu) {
-			menu.onclick = function(e) {
-				e.preventDefault();
-				var target = this.nextElementSibling;
-	
-				menus.map(function(m) {
-					var otherTarget = m.nextElementSibling;
-					if (otherTarget !== target) {
-						slideUp(otherTarget, expandTime);
-						otherTarget.closest('.menu-item').classList.remove('expand');
-						otherTarget.closest('.menu-item').classList.add('closed');
-					}
-				});
-	
-				var targetItemElm = target.closest('.menu-item');
-			
-				if (targetItemElm.classList.contains('expand') || (targetItemElm.classList.contains('active') && !target.style.display)) {
-					targetItemElm.classList.remove('expand');
-					targetItemElm.classList.add('closed');
-					slideToggle(target, expandTime);
-				} else {
-					targetItemElm.classList.add('expand');
-					targetItemElm.classList.remove('closed');
-					slideToggle(target, expandTime);
-				}
-			}
-		});
-	};
-	
-	var menuBaseSelector = '.app-sidebar .menu > .menu-item.has-sub';
-	var submenuBaseSelector = ' > .menu-submenu > .menu-item.has-sub';
-
-	// menu
-	var menuLinkSelector =  menuBaseSelector + ' > .menu-link';
-	var menus = [].slice.call(document.querySelectorAll(menuLinkSelector));
-	handleSidebarMenuToggle(menus);
-
-	// submenu lvl 1
-	var submenuLvl1Selector = menuBaseSelector + submenuBaseSelector;
-	var submenusLvl1 = [].slice.call(document.querySelectorAll(submenuLvl1Selector + ' > .menu-link'));
-	handleSidebarMenuToggle(submenusLvl1);
-
-	// submenu lvl 2
-	var submenuLvl2Selector = menuBaseSelector + submenuBaseSelector + submenuBaseSelector;
-	var submenusLvl2 = [].slice.call(document.querySelectorAll(submenuLvl2Selector + ' > .menu-link'));
-	handleSidebarMenuToggle(submenusLvl2);
-	
-	
-	handleSidebarMinifyFloatMenu();
+	setTimeout(function() {
+		initMenu()
+	}, 1000)	
 });
+
 </script>
 <template>
 	<div id="sidebar" class="app-sidebar">
 		<perfect-scrollbar class="app-sidebar-content">
 			<div class="menu">
-				<template v-for="menu in appSidebarMenu">
-					<div class="menu-header" v-if="menu.is_header">{{ menu.text }}</div>
+				<template v-for="menu in appSidebarMenu.modulos">
+					<div class="menu-header" v-if="menu.titulo == 1">{{ menu.nombre }}</div>
 					<div class="menu-divider" v-else-if="menu.is_divider"></div>
 					<template v-else>
-						<sidebar-nav v-if="menu.text" v-bind:menu="menu"></sidebar-nav>
+						<sidebar-nav v-if="menu.nombre" v-bind:menu="menu"></sidebar-nav>
 					</template>
 				</template>
-				<div class="p-3 px-4 mt-auto hide-on-minified">
+				<!--div class="p-3 px-4 mt-auto hide-on-minified">
 					<a href="https://seantheme.com/studio-vue/documentation/index.html" target="_blank" class="btn d-block btn-secondary fw-600 rounded-pill">
 						<i class="fa fa-code-branch me-1 ms-n1 opacity-5"></i> Documentation
 					</a>
-				</div>
+				</div-->
 			</div>
 		</perfect-scrollbar>
 		<button class="app-sidebar-mobile-backdrop" v-on:click="appSidebarMobileToggled"></button>

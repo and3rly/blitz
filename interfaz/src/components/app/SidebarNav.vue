@@ -28,17 +28,17 @@ function subIsActive(urls) {
 </script>
 <template>
 	<!-- menu with submenu -->
-	<div v-if="menu.children" class="menu-item has-sub" v-bind:class="{ 'active': subIsActive(menu.children) }">
+	<div v-if="menu.opciones" class="menu-item has-sub" v-bind:class="{ 'active': subIsActive(menu.opciones) }">
 		<a class="menu-link">
-			<span class="menu-icon" v-if="menu.icon">
-				<i v-bind:class="menu.icon"></i>
+			<span class="menu-icon" v-if="menu.icono">
+				<i v-bind:class="menu.icono"></i>
 				<span class="w-5px h-5px rounded-3 bg-theme position-absolute top-0 end-0 mt-3px me-3px" v-if="menu.highlight"></span>
 			</span>
-			<span class="menu-text">{{ menu.text }}</span>
-			<span class="menu-caret" v-if="menu.children"><b class="caret"></b></span>
+			<span class="menu-text">{{ menu.nombre }}</span>
+			<span class="menu-caret" v-if="menu.opciones"><b class="caret"></b></span>
 		</a>
 		<div class="menu-submenu">
-			<template v-for="(submenu, index) in menu.children">
+			<template v-for="(submenu, index) in menu.opciones">
 				<sidebar-nav v-bind:menu="submenu"></sidebar-nav>
 			</template>
 		</div>
@@ -48,11 +48,11 @@ function subIsActive(urls) {
 	<router-link v-else v-bind:to="menu.url" custom v-slot="{ navigate, href, isActive }">
 		<div class="menu-item" v-bind:class="{ 'active': isActive }">
 			<a v-bind:href="href" @click="navigate" class="menu-link">
-				<span class="menu-icon" v-if="menu.icon">
-					<i v-bind:class="menu.icon"></i>
+				<span class="menu-icon" v-if="menu.icono">
+					<i v-bind:class="menu.icono"></i>
 					<span class="menu-icon-label" v-if="menu.label">{{ menu.label }}</span>
 				</span>
-				<span class="menu-text">{{ menu.text }}</span>
+				<span class="menu-text">{{ menu.nombre }}</span>
 			</a>
 		</div>
 	</router-link>
