@@ -51,12 +51,12 @@ if (!function_exists('var_session'))
 		$apellido = explode(" ", $data->apellido);
 
 		$sesion = [
-			"id"                 => $data->id,
-			"nombre"             => $nombre[0],
-			"apellido"           => $apellido[0],
-			"usuario"            => $data->usuario,
-			"empresa_id"         => $data->empresa_id,
-			"establecimiento_id" => $data->establecimiento_id
+			"id"          => $data->id,
+			"nombre"      => $nombre[0],
+			"apellido"    => $apellido[0],
+			"usuario"     => $data->usuario,
+			"empresa_id"  => $data->empresa_id,
+			"sucursal_id" => $data->sucursal_id
 		];
 
 

@@ -9,13 +9,12 @@ class Catalogo_model extends General_model {
 		
 	}
 
-	public function ver_usuario_establecimiento($args=[])
+	public function ver_usuario_sucursal($args=[])
 	{
 		$tmp  = $this->db
 		->where("usuario_id", $args["usuario"])
-		->where("principal", 1)
 		->where("activo", 1)
-		->get("usuario_establecimiento");
+		->get("usuario_sucursal");
 
 		return verConsulta($tmp, $args);
 	}

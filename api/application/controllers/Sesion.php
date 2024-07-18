@@ -8,7 +8,7 @@ class Sesion extends CI_Controller {
 		parent::__construct();
 		$this->load->model([
 			"Usuario_model",
-			"mnt/Establecimiento_model"
+			"mnt/Sucursal_model"
 		]);
 
 		$this->output->set_content_type('application/json');
@@ -33,15 +33,15 @@ class Sesion extends CI_Controller {
 				if ($us->iniciarSesion($headers)) {
 
 					$us->id = $us->getPK();
-					$establecimiento = $this->catalogo->ver_usuario_establecimiento([
+					$sucursal = $this->catalogo->ver_usuario_sucursal([
 						"usuario" => $us->id, 
 						"uno" => true
 					]);
 
-					if ($establecimiento) {
-						$est = new Establecimiento_model($establecimiento->establecimiento_id);
-						$us->establecimiento_id = $est->getPK();
-						$us->empresa_id = $est->empresa_id;
+					if ($sucursal) {
+						$suc = new Sucursal_model($sucursal->sucursal_id);
+						$us->sucursal_id = $suc->getPK();
+						$us->empresa_id = $suc->empresa_id;
 
 						$usuario = var_session($us);
 						$this->session->set_userdata(["usuario" => $usuario]);
@@ -54,7 +54,7 @@ class Sesion extends CI_Controller {
 						$data["usuario"] = $usuario;
 						$data["mensaje"] = "Bienvenido {$us->nombre} a Blitz";
 					} else {
-						$data["mensaje"] = "El usuario no tiene ningun establecimiento asigando.";
+						$data["mensaje"] = "El usuario no tiene ningúna sucursal asignada.";
 					}
 				} else {
 					$data["mensaje"] = "Usuario o clave incorrecta, intente de nuevo.";
