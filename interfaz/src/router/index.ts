@@ -18,6 +18,12 @@ const router = createRouter({
           name: 'Inicio',
           component: () => import('@/views/Inicio.vue'),
           meta: {titulo: 'Inicio'}
+        },
+        {
+          path: '/sucursal',
+          name: 'Sucursal',
+          component: () => import('@/views/mnt/sucursal/Cuerpo.vue'),
+          meta: {titulo: 'Sucursal'}
         }
       ]
     },

@@ -24,6 +24,7 @@ import CardFooter from '@/components/bootstrap/CardFooter.vue';
 import CardGroup from '@/components/bootstrap/CardGroup.vue';
 import CardImgOverlay from '@/components/bootstrap/CardImgOverlay.vue';
 import CardExpandToggler from '@/components/bootstrap/CardExpandToggler.vue';
+import vueSelect from '@/components/plugins/VueSelect.vue';
 
 import axiosClient from "@/plugins/axios.ts"
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
@@ -33,6 +34,8 @@ import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify';
 import { toast, type ToastOptions } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
+
+let tmpModal  = null
 const emitter = mitt();
 const app = createApp(App);
 
@@ -53,6 +56,7 @@ app.component('CardFooter', CardFooter);
 app.component('CardGroup', CardGroup);
 app.component('CardImgOverlay', CardImgOverlay);
 app.component('CardExpandToggler', CardExpandToggler);
+app.component('vueSelect', vueSelect)
 
 app.use(pinia);
 app.use(router);
@@ -79,7 +83,7 @@ pinia.use(piniaPlugin);
 
 app.config.globalProperties.emitter = emitter
 app.config.globalProperties.$http = axiosClient
-app.config.globalProperties.$modal = Modal
+app.config.globalProperties.setModal = setModal
 app.config.globalProperties.$toast = toast
 app.config.globalProperties.$baseUrl = url
 app.mount('#app');

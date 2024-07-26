@@ -6,7 +6,7 @@ class Sucursal extends CI_Controller {
 	{
 		parent::__construct();
 
-		$this->load->model(["mnt/Establecimiento_model"]);
+		$this->load->model(["mnt/Sucursal_model"]);
 		$this->output->set_content_type('application/json');
 	}
 
@@ -18,7 +18,7 @@ class Sucursal extends CI_Controller {
 	public function buscar()
 	{	
 		$data = [
-			"lista" => $this->Establecimiento_model->_buscar($_GET)
+			"lista" => $this->Sucursal_model->_buscar($_GET)
 		];
 
 		$this->output->set_output(json_encode($data));
@@ -44,7 +44,7 @@ class Sucursal extends CI_Controller {
 			$datos = json_decode(file_get_contents("php://input"));
 
 			if (verPropiedad($datos, "nombre")) {
-				$est = new Establecimiento_model($id);
+				$est = new Sucursal_model($id);
 
 				if ($est->existe(["nombre" => $datos->nombre])) {
 					$data["mensaje"] = "El establecmiento ya está registrado.";
