@@ -17,8 +17,7 @@ class Sucursal_model extends General_model {
 
 		if (!empty($id)) {
 			$this->cargar($id);
-		}
-		
+		}	
 	}
 
 	public function existe($args=[])

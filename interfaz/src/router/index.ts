@@ -24,6 +24,12 @@ const router = createRouter({
           name: 'Sucursal',
           component: () => import('@/views/mnt/sucursal/Cuerpo.vue'),
           meta: {titulo: 'Sucursal'}
+        },
+        {
+          path: '/producto',
+          name: 'Producto',
+          component: () => import('@/views/mnt/producto/Principal.vue'),
+          meta: {titulo: 'Producto'}
         }
       ]
     },

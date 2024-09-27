@@ -59,7 +59,6 @@ if (!function_exists('var_session'))
 			"sucursal_id" => $data->sucursal_id
 		];
 
-
 		return $sesion;
 	}
 }
