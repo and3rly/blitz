@@ -1,11 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Unidad_medida extends CI_Controller {
+class Marca extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
-		
+
+		$this->load->model(["mnt/Marca_model"]);
 		$this->output->set_content_type('application/json');
 	}
 
@@ -17,7 +18,7 @@ class Unidad_medida extends CI_Controller {
 	public function buscar()
 	{	
 		$data = [
-			"lista" => $this->Um_model->_buscar($_GET)
+			"lista" => $this->Marca_model->_buscar($_GET)
 		];
 
 		$this->output->set_output(json_encode($data));
@@ -30,22 +31,21 @@ class Unidad_medida extends CI_Controller {
 		if ($this->input->method() === "post") {
 			$datos = json_decode(file_get_contents("php://input"));
 
-			if (verPropiedad($datos, "codigo") &&
-				verPropiedad($datos, "nombre")) {
-				$um = new Um_model($id);
+			if (verPropiedad($datos, "nombre")) {
+				$marca = new Marca_model($id);
 
-				if ($um->guardar($datos)) {
+				if ($marca->guardar($datos)) {
 					$texto = empty($id) ? "guardada":"actualizada";
 					
 					$data["exito"] = 1;
-					$data["mensaje"] = "Unidad de medida {$texto} con éxito.";
-					$data["linea"] = $um->_buscar([
-						"id" => $um->getPK(), 
+					$data["mensaje"] = "Marca {$texto} con éxito.";
+					$data["linea"] = $marca->_buscar([
+						"id" => $marca->getPK(), 
 						"uno" => true
 					]);
 
 				} else {
-					$data["mensaje"] = $um->getMensaje();
+					$data["mensaje"] = $marca->getMensaje();
 				}
 				
 			} else {
@@ -58,8 +58,7 @@ class Unidad_medida extends CI_Controller {
 
 		$this->output->set_output(json_encode($data));
 	}
-
 }
 
-/* End of file Unidad_medida.php */
-/* Location: ./application/controllers/Unidad_medida.php */
+/* End of file Marca.php */
+/* Location: ./application/controllers/Marca.php */

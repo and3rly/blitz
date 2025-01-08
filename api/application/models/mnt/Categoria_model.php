@@ -3,6 +3,7 @@
 class Categoria_model extends General_model {
 
 	public $nombre;
+	public $etiqueta;
 	public $activo = 1;
 
 	public function __construct($id="")

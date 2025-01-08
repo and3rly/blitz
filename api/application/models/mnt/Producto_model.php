@@ -6,14 +6,12 @@ class Producto_model extends General_model {
 	public $nombre;
 	public $descripcion = null;
 	public $imagen_key = null;
-	public $imagen_enlace = null;
-	public $costo = null;
-	public $precio = null;
-	public $activo = 1;
+	public $imagen_link = null;
 	public $tipo;
 	public $marca_id;
 	public $categoria_id;
 	public $unidad_medida_id;
+	public $activo = 1;
 
 	public function __construct($id="")
 	{
@@ -42,7 +40,7 @@ class Producto_model extends General_model {
 		->select("a.*,
 			b.nombre as nombre_marca,
 			c.nombre as nombre_categoria,
-			c.color,
+			c.etiqueta,
 			d.nombre as nombre_um")
 		->join("marca b","b.id = a.marca_id")
 		->join("categoria c","c.id = a.categoria_id")
@@ -52,6 +50,21 @@ class Producto_model extends General_model {
 		return verConsulta($tmp, $args);
 	}
 
+	public function existe($args=[])
+	{
+		if ($this->getPK()) {
+			$this->db->where("id <>", $this->getPK());
+		}
+
+		$tmp = $this->db
+		->where("nombre", $args->nombre)
+		->where("unidad_medida_id", $args->unidad_medida_id)
+		->where("marca_id", $args->marca_id)
+		->where("categoria_id", $args->categoria_id)
+		->get("$this->_tabla");
+
+		return $tmp->num_rows() > 0;
+	}
 }
 
 /* End of file Producto_model.php */

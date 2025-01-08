@@ -30,6 +30,24 @@ const router = createRouter({
           name: 'Producto',
           component: () => import('@/views/mnt/producto/Principal.vue'),
           meta: {titulo: 'Producto'}
+        },
+        {
+          path: '/um',
+          name: 'UnidadMedida',
+          component: () => import('@/views/mnt/um/Principal.vue'),
+          meta: {titulo: 'Unidad de medida'}
+        },
+        {
+          path: '/marca',
+          name: 'Marca',
+          component: () => import('@/views/mnt/marca/Principal.vue'),
+          meta: {titulo: 'Marca'}
+        },
+        {
+          path: '/categoria',
+          name: 'Categoria',
+          component: () => import('@/views/mnt/categoria/Principal.vue'),
+          meta: {titulo: 'Categoría'}
         }
       ]
     },

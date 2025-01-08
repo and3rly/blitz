@@ -5,14 +5,14 @@ class Categoria extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['producto/Categoria_model']);
+		$this->load->model(["mnt/Categoria_model"]);
 
 		$this->output->set_content_type('application/json');
 	}
 
 	public function index()
 	{
-		$this->output->set_status_header('404');
+		$this->output->set_status_header("404");
 	}
 
 	public function buscar()

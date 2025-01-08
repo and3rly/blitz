@@ -253,4 +253,10 @@ if (!function_exists('Hoy')) {
 	}
 }
 
+if (!function_exists("getTipoProducto")) {
+	function getTiposProductos() {
+		return ["B", "S"];
+	}
+}
+
 ?>
