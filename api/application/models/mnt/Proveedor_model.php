@@ -10,9 +10,8 @@ class Proveedor_model extends General_model {
 	public $direccion = null;
 	public $correo = null;
 	public $activo = 1;
-	public $departamento_id = null;
-	public $municipio_id = null;
-	public $usuario_id;
+	public $departamento_id;
+	public $municipio_id;
 
 	public function __construct($id="")
 	{

@@ -12,7 +12,7 @@ class Cliente_model extends General_model {
 	public $activo = 1;
 	public $departamento_id;
 	public $municipio_id;
-	public $usuario_id;
+	public $tipo_documento_id;
 
 	public function __construct($id="")
 	{
