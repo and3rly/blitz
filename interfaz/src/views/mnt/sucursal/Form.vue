@@ -111,14 +111,14 @@
     </div>  
 
     <div class="col-sm-12 text-end mt-4">
-      <button 
+      <!--button 
         v-if="reg !== ''"
         type="button" 
         class="btn btn-secondary me-2" 
         @click="nuevo"
       >
         Cancelar / Nuevo
-      </button>
+      </button-->
 
       <button type="submit" class="btn btn-primary" :disabled="btnGuardar">
         <span v-if="btnGuardar === false">

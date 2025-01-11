@@ -43,7 +43,10 @@ class Proveedor extends CI_Controller {
 		if ($this->input->method() === "post") {
 			$datos = json_decode(file_get_contents("php://input"));
 
-			if (verPropiedad($datos, "nombre")) {
+			if (verPropiedad($datos, "nombre") && 
+				verPropiedad($datos, "departamento_id") && 
+				verPropiedad($datos, "municipio_id")) {
+				
 				$proveedor = new Proveedor_model($id);
 
 				if ($proveedor->existe(["nombre" => $datos->nombre, "identificacion" => $datos->identificacion])) {

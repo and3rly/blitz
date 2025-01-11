@@ -16,11 +16,9 @@ class Proveedor_model extends General_model {
 	public function __construct($id="")
 	{
 		parent::__construct();
-
 		if (!empty($id)) {
 			$this->cargar($id);
 		}
-		
 	}
 
 	public function existe($args=[])
@@ -63,6 +61,7 @@ class Proveedor_model extends General_model {
 			c.nombre as nombre_municipio")
 		->join("departamento b","b.id = a.departamento_id","left")
 		->join("municipio c","c.id = a.municipio_id","left")
+		->order_by("a.fecha", "desc")
 		->get("$this->_tabla a");
 
 		return verConsulta($tmp, $args);

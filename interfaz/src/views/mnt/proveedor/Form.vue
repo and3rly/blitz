@@ -37,41 +37,12 @@
 
     <div class="row mb-1">
       <label 
-        for="inptuRazonSocial" 
-        class="form-label fw-bold col-sm-3 text-end"
-      >
-        Razón social: <span class="text-danger">*</span>
-      </label>
-      <div class="col-sm-8">
-        <input 
-          type="text" 
-          class="form-control" 
-          id="inptuRazonSocial"
-          v-model="form.razon_social"
-        >
-      </div>
-    </div>
-
-    <div class="row mb-1">
-      <label 
         for="inputIdentificacion" 
         class="form-label fw-bold col-sm-3 text-end"
       >
         Identificación:
       </label>
       <div class="col-sm-8">
-        <div class="form-check form-check-inline" v-for="i in cat.tdocumentos">
-          <input 
-            class="form-check-input" 
-            type="radio" 
-            name="inlineRadioOptions" 
-            :id="'chkTipoDoc'+i.id" 
-            :value="i.id"
-            v-model="form.tipo_documento_id"
-          >
-          <label class="form-check-label" :for="'chkTipoDoc'+i.id">{{ i.nombre }}</label>
-        </div>
-
         <input 
           type="text" 
           class="form-control" 
@@ -86,7 +57,7 @@
         id="selectDepartamento" 
         class="form-label fw-bold col-sm-3 text-end"
       >
-        Departamento:
+        Departamento: <span class="text-danger">*</span>
       </label>
       <div class="col-sm-8">
         <vue-select 
@@ -105,7 +76,7 @@
         id="selectMunicipio" 
         class="form-label fw-bold col-sm-3 text-end"
       >
-        Municipio:
+        Municipio: <span class="text-danger">*</span>
       </label>
       <div class="col-sm-8">
         <vue-select
@@ -216,7 +187,7 @@
   export default {
     mixins: [Blitz],
     props: {
-      cliente: {
+      proveedor: {
         type: Object,
         default: null
       }
@@ -227,17 +198,16 @@
     created() {
       this.autoBuscar = false
       this._emit = true
-      this.url = "mnt/cliente"
+      this.url = "mnt/proveedor"
 
-      if (this.cliente == null) {
+      if (this.proveedor == null) {
         this.fbase = {
-          tipo_documento_id: 1,
           departamento_id: "",
           municipio_id: "",
           activo: 1
         }
       } else {
-        this.setDataForm(this.cliente)
+        this.setDataForm(this.proveedor)
       }
 
       this.getDatos()
@@ -247,7 +217,7 @@
         this.inicio = true
 
         this.$http
-        .get(`${this.$baseUrl}/mnt/cliente/get_datos`)
+        .get(`${this.$baseUrl}/mnt/proveedor/get_datos`)
         .then(res => {
 
           this.inicio = false
@@ -258,10 +228,6 @@
           console.log(e)
         })
       },
-      nuevo() {
-        this.$emit("limpiar")
-        this.limpiar()
-      }
     },
     computed: {
       departamentos() {
@@ -278,7 +244,7 @@
             return e.departamento_id == this.form.departamento_id
           })
 
-          this.form.municipio_id = (this.cliente && this.form.departamento_id === this.cliente.departamento_id) ? this.cliente.municipio_id : ""
+          this.form.municipio_id = (this.proveedor && this.form.departamento_id === this.proveedor.departamento_id) ? this.proveedor.municipio_id : ""
 
           return this.setDatoSelect(tmpMun, "id", "nombre")
         } 
