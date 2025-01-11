@@ -60,6 +60,12 @@ const router = createRouter({
           name: 'Proveedor',
           component: () => import('@/views/mnt/proveedor/Principal.vue'),
           meta: {titulo: 'Proveedor'}
+        },
+        {
+          path: '/usuario',
+          name: 'Usuario',
+          component: () => import('@/views/mnt/usuario/Principal.vue'),
+          meta: {titulo: 'Usuario'}
         }
       ]
     },
