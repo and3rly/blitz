@@ -57,9 +57,12 @@ class Cliente_model extends General_model {
 		$tmp = $this->db
 		->select("a.*, 
 			b.nombre as nombre_departamento, 
-			c.nombre as nombre_municipio")
+			c.nombre as nombre_municipio,
+			d.nombre as tipo_documento")
 		->join("departamento b","b.id = a.departamento_id","left")
 		->join("municipio c","c.id = a.municipio_id","left")
+		->join("tipo_documento d","d.id = a.tipo_documento_id", "left")
+		->order_by("a.fecha", "desc")
 		->get("$this->_tabla a");
 
 		return verConsulta($tmp, $args);

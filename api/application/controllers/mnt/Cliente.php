@@ -29,7 +29,8 @@ class Cliente extends CI_Controller {
 		$data = [
 			"cat" => [
 				"departamentos" => $this->catalogo->ver_departamento(),
-				"municipios"    => $this->catalogo->ver_municipio()
+				"municipios"    => $this->catalogo->ver_municipio(),
+				"tdocumentos"   => $this->catalogo->ver_tipo_documento()
 			]
 		];
 
@@ -43,7 +44,7 @@ class Cliente extends CI_Controller {
 		if ($this->input->method() === "post") {
 			$datos = json_decode(file_get_contents("php://input"));
 
-			if (verPropiedad($datos, "nombre")) {
+			if (verPropiedad($datos, "nombre") && verPropiedad($datos, "razon_social")) {
 				$cliente = new Cliente_model($id);
 
 				if ($cliente->existe(["nombre" => $datos->nombre, "identificacion" => $datos->identificacion])) {
@@ -55,7 +56,10 @@ class Cliente extends CI_Controller {
 						$texto = empty($id) ? "creado" : "actualizado";
 						$data["mensaje"] = "Cliente {$texto} con éxito.";
 						
-						$data["linea"]   = $cliente->_buscar(["id" => $cliente->getPK(), "uno" => true]);
+						$data["linea"]   = $cliente->_buscar([
+							"id" => $cliente->getPK(), 
+							"uno" => true
+						]);
 					} else {
 						$data["mensaje"] = $cliente->getMensaje();
 					}

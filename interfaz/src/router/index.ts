@@ -48,6 +48,12 @@ const router = createRouter({
           name: 'Categoria',
           component: () => import('@/views/mnt/categoria/Principal.vue'),
           meta: {titulo: 'Categoría'}
+        },
+        {
+          path: '/cliente',
+          name: 'Cliente',
+          component: () => import('@/views/mnt/cliente/Principal.vue'),
+          meta: {titulo: 'Cliente'}
         }
       ]
     },

@@ -1,13 +1,30 @@
 <template>
   <form @submit.prevent="guardar">
-    <div class="row g-2">
-      <div class="col-sm-6">
-        <label 
-          for="inputNombre" 
-          class="form-label fw-bold mb-1"
+    <div class="row mb-1">
+      <label 
+        for="inputCodigo" 
+        class="form-label fw-bold col-sm-3 text-end"
+      >
+        Código:
+      </label>
+      <div class="col-sm-8">
+        <input 
+          type="text" 
+          class="form-control" 
+          id="inputCodigo"
+          v-model="form.codigo"
         >
-          Nombre: <span class="text-danger">*</span>
-        </label>
+      </div>
+    </div>
+
+    <div class="row mb-1">
+      <label 
+        for="inputNombre" 
+        class="form-label fw-bold col-sm-3 text-end"
+      >
+        Nombre: <span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-8">
         <input 
           type="text" 
           class="form-control" 
@@ -16,14 +33,16 @@
           required
         >
       </div>
+    </div>
 
-      <div class="col-sm-6">
-        <label 
-          for="inptuRazonSocial" 
-          class="form-label fw-bold mb-1"
-        >
-          Razón social:
-        </label>
+    <div class="row mb-1">
+      <label 
+        for="inptuRazonSocial" 
+        class="form-label fw-bold col-sm-3 text-end"
+      >
+        Razón social: <span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-8">
         <input 
           type="text" 
           class="form-control" 
@@ -31,13 +50,45 @@
           v-model="form.razon_social"
         >
       </div>
+    </div>
 
-      <div class="col-sm-6">
-        <label
-          class="form-label fw-bold mb-1"
+    <div class="row mb-1">
+      <label 
+        for="inputIdentificacion" 
+        class="form-label fw-bold col-sm-3 text-end"
+      >
+        Identificación:
+      </label>
+      <div class="col-sm-8">
+        <div class="form-check form-check-inline" v-for="i in cat.tdocumentos">
+          <input 
+            class="form-check-input" 
+            type="radio" 
+            name="inlineRadioOptions" 
+            :id="'chkTipoDoc'+i.id" 
+            :value="i.id"
+            v-model="form.tipo_documento_id"
+          >
+          <label class="form-check-label" :for="'chkTipoDoc'+i.id">{{ i.nombre }}</label>
+        </div>
+
+        <input 
+          type="text" 
+          class="form-control" 
+          id="inputIdentificacion"
+          v-model="form.identificacion"
         >
-          Departamento:
-        </label>
+      </div>
+    </div>
+
+    <div class="row mb-1">
+      <label 
+        id="selectDepartamento" 
+        class="form-label fw-bold col-sm-3 text-end"
+      >
+        Departamento:
+      </label>
+      <div class="col-sm-8">
         <vue-select 
           id="selectDepartamento"
           :options="departamentos"
@@ -47,13 +98,16 @@
         >  
         </vue-select>
       </div>
+    </div>
 
-      <div class="col-sm-6">
-        <label
-          class="form-label fw-bold mb-1"
-        >
-          Municipio:
-        </label>
+    <div class="row mb-1">
+      <label 
+        id="selectMunicipio" 
+        class="form-label fw-bold col-sm-3 text-end"
+      >
+        Municipio:
+      </label>
+      <div class="col-sm-8">
         <vue-select
           id="selectMunicipio"
           :options="municipios"
@@ -63,14 +117,16 @@
         >  
         </vue-select>
       </div>
+    </div>
 
-      <div class="col-sm-6">
-        <label 
-          for="inputDireccion" 
-          class="form-label fw-bold mb-1"
-        >
-          Dirección:
-        </label>
+    <div class="row mb-1">
+      <label 
+        for="inputDireccion" 
+        class="form-label fw-bold col-sm-3 text-end"
+      >
+        Dirección:
+      </label>
+      <div class="col-sm-8">
         <input 
           type="text" 
           class="form-control" 
@@ -78,14 +134,16 @@
           v-model="form.direccion"
         >
       </div>
+    </div>
 
-      <div class="col-sm-6">
-        <label 
-          for="inputTelefono" 
-          class="form-label fw-bold mb-1"
-        >
-          Teléfono:
-        </label>
+    <div class="row mb-1">
+      <label 
+        for="inputTelefono" 
+        class="form-label fw-bold col-sm-3 text-end"
+      >
+        Teléfono:
+      </label>
+      <div class="col-sm-8">
         <input 
           type="text" 
           class="form-control" 
@@ -95,7 +153,24 @@
       </div>
     </div>
 
-    <div class="col-sm-12 mt-2" v-if="reg !== ''">
+    <div class="row mb-1">
+      <label 
+        for="inputCorreo" 
+        class="form-label fw-bold col-sm-3 text-end"
+      >
+        Correo:
+      </label>
+      <div class="col-sm-8">
+        <input 
+          type="text" 
+          class="form-control" 
+          id="inputCorreo"
+          v-model="form.correo"
+        >
+      </div>
+    </div>
+
+    <div class="row col-sm-8 offset-sm-3 mt-1" v-if="reg !== ''">
       <div class="form-check form-switch">
         <input 
           class="form-check-input" 
@@ -108,7 +183,7 @@
         >
         <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
       </div>
-    </div>  
+    </div>
 
     <div class="col-sm-12 text-end mt-4">
       <button 
@@ -131,46 +206,48 @@
         </template>  
       </button>
     </div>
+
   </form>
 </template>
 
 <script>
   import Blitz from "@/mixins/Blitz.js"
-  
+
   export default {
-    name: "FormEstablecimiento",
     mixins: [Blitz],
     props: {
-      sucursal: {
+      cliente: {
         type: Object,
         default: null
       }
     },
     data: () => ({
-      cat: []
+      cat: {}
     }),
     created() {
-      this.url = "mnt/sucursal"
       this.autoBuscar = false
       this._emit = true
-      this.getDatos()
+      this.url = "mnt/cliente"
 
-      if (this.sucursal === null) {
+      if (this.cliente == null) {
         this.fbase = {
+          tipo_documento_id: 1,
           departamento_id: "",
           municipio_id: "",
           activo: 1
         }
       } else {
-        this.setDataForm(this.sucursal)
+        this.setDataForm(this.cliente)
       }
+
+      this.getDatos()
     },
     methods: {
       getDatos() {
         this.inicio = true
 
         this.$http
-        .get(`${this.$baseUrl}/mnt/sucursal/get_datos`)
+        .get(`${this.$baseUrl}/mnt/cliente/get_datos`)
         .then(res => {
 
           this.inicio = false
@@ -201,10 +278,9 @@
             return e.departamento_id == this.form.departamento_id
           })
 
-          this.form.municipio_id = (this.sucursal && this.form.departamento_id === this.sucursal.departamento_id) ? this.sucursal.municipio_id : ""
+          this.form.municipio_id = (this.cliente && this.form.departamento_id === this.cliente.departamento_id) ? this.cliente.municipio_id : ""
 
           return this.setDatoSelect(tmpMun, "id", "nombre")
-          
         } 
 
         return []

@@ -141,6 +141,15 @@ class Catalogo_model extends General_model {
 
 		return $this->Presentacion_model->_buscar($args);
 	}
+
+	public function ver_tipo_documento($args=[])
+	{
+		$tmp  = $this->db
+		->where("activo", 1)
+		->get("tipo_documento");
+
+		return verConsulta($tmp, $args);
+	}
 }
 
 /* End of file Catalogo_model.php */
