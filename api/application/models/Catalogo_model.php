@@ -150,6 +150,15 @@ class Catalogo_model extends General_model {
 
 		return verConsulta($tmp, $args);
 	}
+
+	public function ver_rol($args=[])
+	{
+		$tmp  = $this->db
+		->where("activo", 1)
+		->get("rol");
+
+		return verConsulta($tmp, $args);
+	}
 }
 
 /* End of file Catalogo_model.php */

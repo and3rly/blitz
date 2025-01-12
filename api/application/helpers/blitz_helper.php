@@ -74,7 +74,7 @@ if (!function_exists('outputJson')) {
 if (!function_exists('generarCodigo')) {
 	function generarCodigo($longitud=10) 
 	{
-		$cadena ='23456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$cadena ='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#$@';
 		$cadenaAncho = strlen($cadena);
 
 		$codigo = '';
