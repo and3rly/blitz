@@ -63,9 +63,11 @@
       <div class="col-sm-8">
         <div class="input-group">
           <input 
-            id="inputPassword"
             :type="verClave ? 'text' : 'password'" 
-            class="form-control" 
+            autocomplete="new-password"
+            class="form-control"
+            id="inputPassword"
+            maxlength="10"
             v-model="form.clave"
           >
           <button 
@@ -75,6 +77,9 @@
           >
             <i :class="verClave ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
           </button>
+        </div>
+        <div id="passwordHelpBlock" class="form-text">
+          Su contraseña debe tener entre 8 y 10 caracteres de longitud, contener letras y números y no debe contener espacios.
         </div>
       </div>
     </div>

@@ -66,6 +66,12 @@ const router = createRouter({
           name: 'Usuario',
           component: () => import('@/views/mnt/usuario/Principal.vue'),
           meta: {titulo: 'Usuario'}
+        },
+        {
+          path: '/moneda',
+          name: 'Moneda',
+          component: () => import('@/views/mnt/moneda/Principal.vue'),
+          meta: {titulo: 'Moneda'}
         }
       ]
     },

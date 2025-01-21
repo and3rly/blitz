@@ -2,8 +2,9 @@
 
 class Moneda_model extends General_model {
 
-	public $simbolo;
 	public $nombre;
+	public $simbolo;
+	public $cambio = null;
 	public $activo = 1;
 
 	public function __construct($id="")

@@ -60,10 +60,13 @@ class Usuario_model extends General_model {
 	}
 
 	public function _buscar($args=[])
-	{
+	{	
+		if (elemento($args, "id")) {
+			$this->db->where("a.id", $args["id"]);
+		}
+
 		$tmp = $this->db
 		->select("a.*,
-
 				b.nombre as nombre_rol")
 		->join("rol b","b.id = a.rol_id")
 		->where("a.activo", 1)

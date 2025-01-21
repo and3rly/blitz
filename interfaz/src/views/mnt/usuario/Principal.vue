@@ -32,7 +32,7 @@
 
     <div class="card-body p-0">
       <div class="table-responsive">
-        <table class="table table-sm m-0">
+        <table class="table table-sm table-drop table-striped m-0">
           <thead class="table-light">
             <tr>
               <th class="text-center">#</th>
@@ -41,6 +41,7 @@
               <th>Rol</th>
               <th class="text-center">Fecha</th>
               <th class="text-center">Estado</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -69,6 +70,31 @@
                   <i class="fa fa-circle text-red fs-9px fa-fw me-5px"></i> Inactivo
                 </span>
               </td>
+              <td class="text-center">
+                <div class="dropdown">
+                  <a
+                    href="javascript:;"
+                    id="dropdownMenu" 
+                    data-bs-toggle="dropdown" 
+                    data-bs-display="static"
+                    data-boundary="viewport" 
+                    aria-expanded="false"
+                  >
+                    <i class="fa-solid fa-ellipsis"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu">
+                    <li>
+                      <a 
+                        class="dropdown-item" 
+                        href="javascript:;"
+                        @click="setSucursal(i)"
+                      >
+                        <i class="fas fa-store me-2"></i>Asignar sucursal
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -89,7 +115,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="staticBackdropLabel">
-            <i class="fas fa-user"></i> {{ usuario != null ? "Usuario: " + usuario.nombre: "Nuevo usuario" }}
+            <i class="fas fa-user"></i> {{ usuario != null ? usuario.nombre +" "+ usuario.apellido: "Nuevo usuario" }}
           </h1>
           <button 
             type="button" 
@@ -111,11 +137,47 @@
     </div>
   </div>
 
+  <div 
+    class="modal fade" 
+    id="mdlSucursal" 
+    data-bs-backdrop="static" 
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel" 
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fs-5" id="staticBackdropLabel" style="font-weight: normal;">
+            <i class="fas fa-project-diagram"></i> Asignar de sucursales al usuario 
+            <span 
+              v-if="usuario !== null" 
+              class="fw-bold"
+            >
+              {{ usuario.nombre }} {{ usuario.apellido }}
+            </span>
+          </h5>
+          <button 
+            type="button" 
+            class="btn-close" 
+            data-bs-dismiss="modal" 
+            aria-label="Close" 
+          ></button>
+        </div>
+        <div class="modal-body">
+          <UsuarioSucursal></UsuarioSucursal>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
   import Helper from "@/mixins/Helper.js"
   import Form from "@/views/mnt/usuario/Form.vue"
+  import UsuarioSucursal from "@/views/mnt/usuario/UsuarioSucursal.vue"
 
   export default {
     mixins: [Helper],
@@ -123,7 +185,7 @@
       inicio:false,
       verForm: false,
       lista: [],
-      usuario: {}
+      usuario: null
     }),
     created() {
       this.buscar()
@@ -139,6 +201,11 @@
       cerrarModal() {
         this.verForm = false
         this.mdlForm.hide()
+      },
+      setSucursal(obj) {
+        this.usuario = obj
+        this.mdlForm = this.setModal("mdlSucursal")
+        this.mdlForm.show()
       },
       buscar() {
         this.inicio = true
@@ -169,7 +236,22 @@
       }
     },
     components: {
-      Form
+      Form,
+      UsuarioSucursal
     }
   }
 </script>
+
+<style>
+  @media (max-width: 767px) {
+    .table-responsive .dropdown-menu {
+        position: static !important;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .table-responsive {
+        overflow: visible;
+    }
+  }
+</style>
