@@ -32,7 +32,7 @@
 
     <div class="card-body p-0">
       <div class="table-responsive">
-        <table class="table table-sm table-drop table-striped m-0">
+        <table class="table table-sm table-drop m-0">
           <thead class="table-light">
             <tr>
               <th class="text-center">#</th>
@@ -45,7 +45,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(i, idx) in lista" :key="idx">
+            <template v-if="inicio">
+              <tr>
+                <td colspan="100" class="text-center py-3">
+                  <div class="spinner-border text-dark"></div><br>
+                  Cargando...
+                </td>
+              </tr>
+            </template>
+            <template v-if="lista.length == 0 && !inicio">
+              <tr>
+                <td 
+                  colspan="100" 
+                  class="text-center py-3"
+                >
+                  No se encontraron registros.
+                </td>
+              </tr>
+            </template>
+            <tr 
+              v-for="(i, idx) in lista"
+              style="cursor: pointer;" 
+              :key="idx"
+              v-else
+            >
               <th class="text-center">{{ idx + 1 }}</th>
               <th>
                 <a href="javascript:;" class="text-decoration-none" @click="verUsuario(i)">

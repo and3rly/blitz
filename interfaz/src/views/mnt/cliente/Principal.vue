@@ -47,7 +47,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(i, idx) in lista" :key="idx" style="cursor: pointer;">
+            <template v-if="inicio">
+              <tr>
+                <td colspan="100" class="text-center py-3">
+                  <div class="spinner-border text-dark"></div><br>
+                  Cargando...
+                </td>
+              </tr>
+            </template>
+            <template v-if="lista.length == 0 && !inicio">
+              <tr>
+                <td 
+                  colspan="100" 
+                  class="text-center py-3"
+                >
+                  No se encontraron registros.
+                </td>
+              </tr>
+            </template>
+            <tr 
+              v-for="(i, idx) in lista" 
+              :key="idx" 
+              style="cursor: pointer;" 
+              v-else
+            >
               <th class="text-center">{{ idx + 1 }}</th>
               <th>
                 <a href="javascript:;" class="text-decoration-none" @click="verCliente(i)">

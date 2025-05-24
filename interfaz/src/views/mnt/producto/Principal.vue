@@ -54,12 +54,31 @@
             </tr>
           </thead>
           <tbody>
+            <template v-if="inicio">
+              <tr>
+                <td colspan="100" class="text-center py-3">
+                  <div class="spinner-border text-dark"></div><br>
+                  Cargando...
+                </td>
+              </tr>
+            </template>
+            <template v-if="lista.length == 0 && !inicio">
+              <tr>
+                <td 
+                  colspan="100" 
+                  class="text-center py-3"
+                >
+                  No se encontraron registros.
+                </td>
+              </tr>
+            </template>
             <tr 
               v-for="(i, idx) in lista" 
               @click="verProducto(i)" 
               style="cursor: pointer;"
+              v-else
             >
-              <th class="text-center">{{ idx + 1 }}</th>
+              <td class="text-center fw-bold">{{ idx + 1 }}</td>
               <td class="text-center">
                 <Imagen
                   :img="i.imagen_key"
@@ -104,6 +123,7 @@
     v-if="actual == 2"
     :producto="producto"
     @actualizar="actLista"
+    @regresar="regresar"
   ></Form>
 
 </template>

@@ -1,7 +1,8 @@
 <template>
   <img 
     :src="urlImg"
-    :width="width" 
+    :width="width"
+    :class="clase" 
   />
 </template>
 
@@ -15,6 +16,10 @@ export default {
     width: {
       type: Number,
       default: 200
+    },
+    clase: {
+      type: String,
+      default: ""
     }
   },
   data() {

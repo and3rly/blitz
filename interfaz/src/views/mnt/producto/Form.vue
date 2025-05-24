@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header fw-bold">
           Imagen
         </div>
         <div class="card-body py-4">
@@ -14,7 +14,7 @@
 
           <label 
             for="file-upload" 
-            class="btn btn-secondary d-flex align-items-center justify-content-center d-grid gap-2 mt-4"
+            class="btn btn-light d-flex align-items-center justify-content-center d-grid gap-2 mt-4"
           > 
             <template v-if="reg == '' || this.producto == null">
               <i class="fas fa-plus"></i> Subir imagen
@@ -37,7 +37,7 @@
 
     <div class="col-sm-9">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header fw-bold">
           Datos generales
         </div>
         <div class="card-body">
@@ -206,10 +206,12 @@
 
             <div class="col-sm-12 text-end mt-4">
               <button
+                v-if="reg !== ''"
                 type="button" 
-                class="btn btn-secondary me-2"
+                class="btn btn-light me-2"
+                @click="$emit('regresar')"
               >
-                Cancelar / Nuevo
+                Cancelar
               </button>
 
               <button type="submit" class="btn btn-primary" :disabled="btnGuardar">
