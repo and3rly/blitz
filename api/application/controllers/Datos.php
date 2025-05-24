@@ -9,11 +9,10 @@ class Datos extends CI_Controller {
 
 	public function index()
 	{
-        die();
+        die("Hola mundo");
 	}
 
-
-	public function departamentos()
+	public function set_datos()
 	{
 		$rutaArchivo = 'D:\dep.json';
         $jsonContenido = file_get_contents($rutaArchivo);

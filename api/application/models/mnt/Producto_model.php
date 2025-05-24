@@ -11,6 +11,8 @@ class Producto_model extends General_model {
 	public $marca_id;
 	public $categoria_id;
 	public $unidad_medida_id;
+	public $costo;
+	public $precio;
 	public $activo = 1;
 
 	public function __construct($id="")

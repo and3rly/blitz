@@ -25,6 +25,7 @@ import CardGroup from '@/components/bootstrap/CardGroup.vue';
 import CardImgOverlay from '@/components/bootstrap/CardImgOverlay.vue';
 import CardExpandToggler from '@/components/bootstrap/CardExpandToggler.vue';
 import vueSelect from '@/components/plugins/VueSelect.vue';
+import QuillEditor from '@/components/plugins/QuillEditor.vue';
 
 import axiosClient from "@/plugins/axios.ts"
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
@@ -57,6 +58,7 @@ app.component('CardGroup', CardGroup);
 app.component('CardImgOverlay', CardImgOverlay);
 app.component('CardExpandToggler', CardExpandToggler);
 app.component('vueSelect', vueSelect)
+app.component('QuillEditor', QuillEditor)
 
 app.use(pinia);
 app.use(router);

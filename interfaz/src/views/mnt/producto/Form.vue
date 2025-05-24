@@ -7,9 +7,11 @@
         </div>
         <div class="card-body py-4">
           <div class="col-sm-12 text-center">
-            <img :src="urlFoto" width="60%"/>
+            <Imagen
+              :img="imgActual"
+            ></Imagen>
           </div>
-          
+
           <label 
             for="file-upload" 
             class="btn btn-secondary d-flex align-items-center justify-content-center d-grid gap-2 mt-4"
@@ -27,7 +29,7 @@
             id="file-upload" 
             class="form-control" 
             type="file"
-            @change="handleFileChange"
+            @change="subirImagen"
           />            
         </div>
       </div>
@@ -139,9 +141,41 @@
                 </vue-select>
               </div>
 
+              <div class="col-sm-6">
+                <label 
+                  for="inputCosto" 
+                  class="form-label fw-bold mb-1"
+                >
+                  Costo:
+                </label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="inputCosto"
+                  step="any"
+                  v-model="form.costo"
+                />
+              </div>
+
+              <div class="col-sm-6">
+                <label 
+                  for="inputPrecio" 
+                  class="form-label fw-bold mb-1"
+                >
+                  Precio:
+                </label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="inputPrecio"
+                  step="any"
+                  v-model.number="form.precio"
+                />
+              </div>
+
               <div class="col-sm-12">
                 <label 
-                  for="inputNombre" 
+                  for="inputDescripcion" 
                   class="form-label fw-bold mb-1"
                 >
                   Descripción:
@@ -149,7 +183,7 @@
                 <textarea 
                   class="form-control" 
                   id="inputDescripcion" 
-                  rows="3"
+                  rows="6"
                   v-model="form.descripcion"
                 ></textarea>
               </div>
@@ -199,6 +233,7 @@
 
 <script>
   import Blitz from "@/mixins/Blitz.js"
+  import Imagen from "@/components/general/Imagen.vue"
 
   export default {
     name: "FormProducto",
@@ -210,7 +245,7 @@
       }
     },
     data: () => ({
-      urlFoto: "",
+      urlFoto: null,
       cat: {},
       inicio: false
     }),
@@ -223,7 +258,6 @@
 
       if (this.producto != null) {
         this.setDataForm(this.producto)
-        this.urlFoto = "https://lh3.googleusercontent.com/d/"+this.producto.imagen_key
       } else {
         this.form = {
           tipo: "B",
@@ -247,11 +281,11 @@
           console.log(e)
         })
       },
-      handleFileChange(f) {
+      subirImagen(f) {
         if (f.target.files[0]) {
         
           let tmp = f.target.files[0]
-          this.urlFoto = URL.createObjectURL(tmp)
+          this.urlFoto = tmp
           this.form.imagen = tmp
         }
       }
@@ -277,12 +311,18 @@
         } 
 
         return []
+      },
+      imgActual() {
+        return this.urlFoto || (this.producto?.imagen_key ? this.producto.imagen_key : null)
       }
+    },
+    components: {
+      Imagen
     },
     watch: {
       producto(v) {
         this.setDataForm(v)
-        this.urlFoto = "https://lh3.googleusercontent.com/d/"+v.imagen_key
+        this.urlFoto = null
       }
     }
   }

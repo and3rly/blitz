@@ -50,9 +50,8 @@ class Producto extends CI_Controller {
 			if ($producto->existe($datos)) {
 				$data["mensaje"] = "El producto que intenta guardar ya existe.";
 			} else {
-
-
-				if (elemento($_FILES, 'imagen') && elemento($_FILES['imagen'], 'tmp_name')) {
+				if (elemento($_FILES, 'imagen') && 
+					elemento($_FILES['imagen'], 'tmp_name')) {
 					$imagen = subirArchivo([
 						'tmp_name' => $_FILES['imagen']['tmp_name'],
 						'type'     => $_FILES['imagen']['type'],

@@ -61,7 +61,10 @@
             >
               <th class="text-center">{{ idx + 1 }}</th>
               <td class="text-center">
-                <img :src="'https://lh3.googleusercontent.com/d/'+i.imagen_key" width="65">
+                <Imagen
+                  :img="i.imagen_key"
+                  :width="50"
+                ></Imagen>
               </td>
               <td>{{ i.codigo }}</td>
               <td>{{ i.nombre }}</td>
@@ -107,6 +110,7 @@
 
 <script>
   import Form from "@/views/mnt/producto/Form.vue"
+  import Imagen from "@/components/general/Imagen.vue"
 
   export default {
     name: "Producto",
@@ -157,7 +161,8 @@
       }
     },
     components: {
-      Form
+      Form,
+      Imagen
     }
   }
 </script>
