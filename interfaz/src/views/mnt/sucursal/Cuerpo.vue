@@ -42,10 +42,30 @@
             </tr>
           </thead>
           <tbody>
+            <template v-if="inicio">
+              <tr>
+                <td colspan="100" class="text-center py-3">
+                  <div class="spinner-border text-dark"></div><br>
+                  Cargando...
+                </td>
+              </tr>
+            </template>
+            <template v-if="lista.length == 0 && !inicio">
+              <tr>
+                <td 
+                  colspan="100" 
+                  class="text-center py-3"
+                >
+                  No se encontraron registros.
+                </td>
+              </tr>
+            </template>
             <tr 
               v-for="(i, idx) in lista" 
               style="cursor: pointer;" 
-              @click="verSucursal(i)">
+              @click="verSucursal(i)"
+              v-else
+            >
               <td class="text-center">{{ idx + 1 }}</td>
               <td>{{ i.nombre }}</td>
               <td>{{ i.razon_social }}</td>
