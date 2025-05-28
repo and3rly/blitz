@@ -140,7 +140,7 @@
 
     }),
     created() {
-      this.url = "mnt/marca"
+      this.url = "producto/marca"
     }
   }
 </script>

@@ -28,25 +28,25 @@ const router = createRouter({
         {
           path: '/producto',
           name: 'Producto',
-          component: () => import('@/views/mnt/producto/Principal.vue'),
+          component: () => import('@/views/producto/Principal.vue'),
           meta: {titulo: 'Producto'}
         },
         {
           path: '/um',
           name: 'UnidadMedida',
-          component: () => import('@/views/mnt/um/Principal.vue'),
+          component: () => import('@/views/producto/um/Principal.vue'),
           meta: {titulo: 'Unidad de medida'}
         },
         {
           path: '/marca',
           name: 'Marca',
-          component: () => import('@/views/mnt/marca/Principal.vue'),
+          component: () => import('@/views/producto/marca/Principal.vue'),
           meta: {titulo: 'Marca'}
         },
         {
           path: '/categoria',
           name: 'Categoria',
-          component: () => import('@/views/mnt/categoria/Principal.vue'),
+          component: () => import('@/views/producto/categoria/Principal.vue'),
           meta: {titulo: 'Categoría'}
         },
         {
@@ -72,6 +72,12 @@ const router = createRouter({
           name: 'Moneda',
           component: () => import('@/views/mnt/moneda/Principal.vue'),
           meta: {titulo: 'Moneda'}
+        },
+        {
+          path: '/producto_sucursal',
+          name: 'ProductoSucursal',
+          component: () => import('@/views/producto/producto_sucursal/Principal.vue'),
+          meta: {titulo: 'Producto Sucursal'}
         }
       ]
     },

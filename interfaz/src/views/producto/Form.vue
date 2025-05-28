@@ -256,7 +256,7 @@
       this.autoBuscar = false
       this._emit = true
 
-      this.url = "mnt/producto"
+      this.url = "producto/producto"
 
       if (this.producto != null) {
         this.setDataForm(this.producto)

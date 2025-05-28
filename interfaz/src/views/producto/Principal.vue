@@ -129,7 +129,7 @@
 </template>
 
 <script>
-  import Form from "@/views/mnt/producto/Form.vue"
+  import Form from "@/views/producto/Form.vue"
   import Imagen from "@/components/general/Imagen.vue"
 
   export default {
@@ -149,7 +149,7 @@
         this.inicio = true 
 
         this.$http
-        .get(`${this.$baseUrl}/mnt/producto/buscar`, {params: this.bform})
+        .get(`${this.$baseUrl}/producto/producto/buscar`, {params: this.bform})
         .then(res => {
 
           this.inicio = false

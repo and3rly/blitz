@@ -82,6 +82,15 @@ class Catalogo_model extends General_model {
 		return verConsulta($tmp, $args);
 	}
 
+	public function ver_sucursal($args=[])
+	{
+		$tmp  = $this->db
+		->where("activo", 1)
+		->get("sucursal");
+
+		return verConsulta($tmp, $args);
+	}
+
 	public function ver_tipo_pago($args=[])
 	{
 		$tmp  = $this->db

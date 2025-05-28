@@ -3,12 +3,12 @@
     <div>
       <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">MANTENIMIENTOS</a></li>
-        <li class="breadcrumb-item active">UNIDAD DE MEDIDA</li>
+        <li class="breadcrumb-item active">CATEGORIA</li>
       </ul>
-      <h3><i class="fas fa-scale-unbalanced-flip"></i> Unidad de Medida</h3>
+      <h3><i class="fas fa-list"></i> Categoría</h3>
     </div>
   </div>
-  
+
   <div class="row">
     <div class="col-sm-5">
       <Card>
@@ -17,23 +17,6 @@
         </CardHeader>
         <CardBody>
           <form @submit.prevent="guardar">
-            <div class="mb-1 row">
-              <label 
-                for="inputCodigo" 
-                class="col-sm-3 col-form-label fw-bold"
-              >
-                Código: <span class="text-danger">*</span>
-              </label>
-              <div class="col-sm-9">
-                <input 
-                  type="text" 
-                  class="form-control" 
-                  id="inputCodigo"
-                  v-model="form.codigo"
-                >
-              </div>
-            </div>
-
             <div class="mb-2 row">
               <label 
                 for="inptuNombre" 
@@ -113,20 +96,14 @@
             <table class="table table-sm table-hover m-0">
               <thead>
                 <tr>
-                  <th class="text-center">#</th>
-                  <th>Código</th>
+                  <th>#</th>
                   <th>Nombre</th>
                   <th>Estado</th>
                 </tr>
               </thead>
               <tbody>
-                <tr 
-                  v-for="(i, idx) in filtrada" 
-                  @click="setDataForm(i)" 
-                  style="cursor: pointer;"
-                >
-                  <td class="text-center">{{ idx + 1 }}</td>
-                  <td>{{ i.codigo }}</td>
+                <tr v-for="(i, idx) in filtrada" @click="setDataForm(i)" style="cursor: pointer;">
+                  <td>{{ idx + 1 }}</td>
                   <td>{{ i.nombre }}</td>
                   <td>
                     <span 
@@ -157,13 +134,13 @@
   import Blitz from "@/mixins/Blitz.js"
 
   export default {
-    name: "UnidadMedida",
+    name: "Categoria",
     mixins: [Blitz],
     data: () => ({
 
     }),
     created() {
-      this.url = "mnt/unidad_medida"
+      this.url = "producto/categoria"
     }
   }
 </script>

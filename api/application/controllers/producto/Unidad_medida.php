@@ -5,13 +5,14 @@ class Unidad_medida extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		
-		$this->output->set_content_type('application/json');
+
+		$this->load->model(["producto/Um_model"]);
+		$this->output->set_content_type("application/json");
 	}
 
 	public function index()
 	{
-		$this->output->set_status_header('404');
+		$this->output->set_status_header("404");
 	}
 
 	public function buscar()
@@ -22,8 +23,8 @@ class Unidad_medida extends CI_Controller {
 
 		$this->output->set_output(json_encode($data));
 	}
-
-	public function guardar($id="")
+	
+	public function guardar($id='')
 	{
 		$data = ["exito" => 0];
 
@@ -58,7 +59,6 @@ class Unidad_medida extends CI_Controller {
 
 		$this->output->set_output(json_encode($data));
 	}
-
 }
 
 /* End of file Unidad_medida.php */

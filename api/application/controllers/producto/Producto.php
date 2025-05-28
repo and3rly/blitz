@@ -6,7 +6,7 @@ class Producto extends CI_Controller {
 	{
 		parent::__construct();
 
-		$this->load->model(["mnt/Producto_model"]);
+		$this->load->model(["producto/Producto_model"]);
 		$this->output->set_content_type("application/json");
 	}
 
