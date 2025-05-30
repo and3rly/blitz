@@ -78,6 +78,12 @@ const router = createRouter({
           name: 'ProductoSucursal',
           component: () => import('@/views/producto/producto_sucursal/Principal.vue'),
           meta: {titulo: 'Producto Sucursal'}
+        },
+        {
+          path: '/compra',
+          name: 'OrdenCompra',
+          component: () => import('@/views/compra/Principal.vue'),
+          meta: {titulo: 'Orden de Compra'}
         }
       ]
     },

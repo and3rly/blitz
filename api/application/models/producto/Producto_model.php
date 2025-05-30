@@ -47,6 +47,7 @@ class Producto_model extends General_model {
 		->join("marca b","b.id = a.marca_id")
 		->join("categoria c","c.id = a.categoria_id")
 		->join("unidad_medida d","d.id = a.unidad_medida_id")
+		->order_by("a.fecha", "desc")
 		->get("$this->_tabla a");
 
 		return verConsulta($tmp, $args);

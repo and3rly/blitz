@@ -67,6 +67,8 @@ app.use(PerfectScrollbarPlugin);
 
 app.use(Vue3Toastify, {
   autoClose: 3000,
+  multiLine: true,
+  dangerouslyHTMLString: true,
   "theme": "colored",
 } as ToastContainerOptions);
 

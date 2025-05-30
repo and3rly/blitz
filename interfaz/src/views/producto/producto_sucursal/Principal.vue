@@ -11,14 +11,14 @@
       </ul>
 
       <h3 class="mb-0 d-flex align-items-center">
-        <i class="fas fa-list me-1"></i> Producto Sucursal
+        <i class="fas fa-wrench me-1"></i> Asignación por sucursal
       </h3>
     </div>
     <div class="ms-auto">
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" v-if="actual == 1">
     <div class="card-body p-0">
       <div class="table-responsive">
         <table class="table table-sm m-0">
@@ -50,12 +50,13 @@
                 v-else
               >
                 <td class="text-center fw-bold">{{ idx + 1 }}</td>
-                <td>{{ i.nombre }}</td>
+                <td class="fw-bold">
+                  <a href="javascript:;" class="text-decoration-none" @click="verProductos(i)">{{ i.nombre }}</a></td>
                 <td>
                   <button
                     class="btn btn-sm btn-lime"
                     title="Asignar productos"
-                    @click=""
+                    @click="verProductos(i)"
                   >
                     <i class="fas fa-arrow-right"></i>
                   </button>
@@ -66,16 +67,27 @@
         </table>
       </div>
     </div>
-  </div>  
+  </div>
+
+  <Producto 
+    v-if="actual == 2"
+    :productos="cat.productos"
+    :sucursal="sucursal"
+    @regresar="regresar"
+  ></Producto>
 </template>
 
 <script>
+  import Producto from "@/views/producto/producto_sucursal/Producto.vue"
+
   export default {
     name: "ProductoSucursal",
     data: () => ({
+      actual: 1,
       inicio: false,
       cat: null,
-      url: "producto/producto_sucursal"
+      url: "producto/producto_sucursal",
+      sucursal: null
     }),
     created() {
       this.getDatos()
@@ -95,7 +107,18 @@
           this.inicio = false
           console.log(e)
         })
+      },
+      verProductos(o) {
+        this.sucursal = o
+        this.actual = 2
+      },
+      regresar() {
+        this.actual = 1
+        this.sucursal = null
       }
+    },
+    components: {
+      Producto
     }
   }
 </script>

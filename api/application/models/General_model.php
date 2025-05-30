@@ -171,23 +171,6 @@ class General_model extends CI_Model {
         	$this->db->like('descripcion', $args['descripcion']);
         }
 
-        $bloqueado = [
-        	'_uno',
-        	'descripcion',
-        	'_orden_asc',
-        	'_orden_desc',
-        	'_between',
-        	'_orden_rand'
-        ];
-
-		if (count($args) > 0) {
-			foreach ($args as $key => $row) {
-				if(!in_array($key, $bloqueado)){
-					$this->db->where($key, $row);
-				}
-			}	
-		}		
-
 		if (isset($args['_between'])) {
 			$campo  = $args['_between'][0];
 			$valor1 = $args['_between'][1];
@@ -206,6 +189,20 @@ class General_model extends CI_Model {
 
 		if (isset($args['_orden_desc'])) {
 			$this->db->order_by($args['_orden_desc'], 'desc');
+		}
+
+		if (count($args) > 0) {
+			foreach ($args as $key => $row) {
+				if (substr($key, 0, 1) != "_") {
+					$columna = (count(explode(".", $key)) > 1 ? $key : "{$this->_tabla}.{$key}");
+ 
+					if (is_array($row)) {
+						$this->db->where_in($columna, $row);
+					} else {
+						$this->db->where($columna, $row);
+					}
+				}
+			}	
 		}
 
 		$tmp = $this->db->get($this->_tabla);

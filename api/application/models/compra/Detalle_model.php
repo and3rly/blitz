@@ -2,15 +2,15 @@
 
 class Detalle_model extends General_model {
 
-	public $cantidad;
-	public $precio;
-	public $costo;
-	public $total;
+	public $orden_compra_id;
+	public $producto_sucursal_id;
+	public $cantidad = 1;
+	public $cantidad_recibida = 0;
 	public $anulado = 0;
-	public $compra_id;
-	public $producto_precio_id;
-	public $producto_id;
-	public $presentacion_id = null;
+	public $total = 0;
+	public $usuario_id;
+	public $usuario_modifico = null;
+	public $fecha_modificacion = null;
 
 	public function __construct($id="")
 	{
@@ -42,31 +42,7 @@ class Detalle_model extends General_model {
 
 	public function _buscar($args=[])
 	{	
-		if (elemento($args, "id")) {
-			$this->db->where("a.id", $args["id"]);
-		} else {
 
-			if (elemento($args, "compra")) {
-				$this->db->where("a.compra_id", $args["compra"]);
-			}
-		}
-
-		$tmp = $this->db
-		->select("a.*, 
-			c.nombre as nombre_producto,
-			d.nombre as nombre_categoria,
-			d.color,
-			e.codigo,
-			e.nombre,
-			e.factor")
-		->join("producto_precio b","b.id = a.producto_precio_id")
-		->join("producto c","c.id = b.producto_id")
-		->join("categoria d","d.id = c.categoria_id")
-		->join("presentacion e","e.id = a.presentacion_id", "left")
-		->where("a.anulado", 0)
-		->get("{$this->_tabla} a");
-
-		return verConsulta($tmp, $args);
 	}
 
 	public function getCompra($args=[])
