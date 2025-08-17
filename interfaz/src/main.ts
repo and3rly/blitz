@@ -34,9 +34,11 @@ import { Modal } from 'bootstrap'
 import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify';
 import { toast, type ToastOptions } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import * as bootstrap from 'bootstrap'
 
 
 let tmpModal  = null
+let mmdl = ""
 const emitter = mitt();
 const app = createApp(App);
 
@@ -76,6 +78,42 @@ function setModal(modalId) {
   return tmpModal = new Modal(document.getElementById(modalId));
 }
 
+function abrirModal(id) {
+  const elm = document.getElementById(id)
+  if (elm) {
+    mmdl = bootstrap.Modal.getOrCreateInstance(elm, {
+      backdrop: 'static',
+      keyboard: false
+    })
+    mmdl.show()
+  } else {
+    alert("Modal no válido")
+  }
+}
+
+function cerrarModal(id) {
+  const elm = document.getElementById(id)
+  if (elm) {
+    const modal = bootstrap.Modal.getOrCreateInstance(elm)
+
+    // Solo agregar el listener una vez
+    if (!elm.dataset.listenerAttached) {
+      elm.addEventListener('hidden.bs.modal', () => {
+        // Quitar foco activo para evitar warning de accesibilidad
+        if (document.activeElement) {
+          document.activeElement.blur()
+        }
+        console.log(`Modal ${id} cerrado y foco removido`)
+      })
+      elm.dataset.listenerAttached = 'true'
+    }
+
+    modal.hide()
+  } else {
+    console.warn(`Modal con id "${id}" no encontrado`)
+  }
+}
+
 let url = "index.php"
 let piniaPlugin = (context: PiniaPluginContext) => {
   return {
@@ -88,6 +126,8 @@ pinia.use(piniaPlugin);
 app.config.globalProperties.emitter = emitter
 app.config.globalProperties.$http = axiosClient
 app.config.globalProperties.setModal = setModal
+app.config.globalProperties.$abrirModal = abrirModal
+app.config.globalProperties.$cerrarModal = cerrarModal
 app.config.globalProperties.$toast = toast
 app.config.globalProperties.$baseUrl = url
 app.mount('#app');

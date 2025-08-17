@@ -44,7 +44,7 @@ class Sesion extends CI_Controller {
 						$us->empresa_id = $suc->empresa_id;
 
 						$usuario = var_session($us);
-						$this->session->set_userdata(["usuario" => $usuario]);
+						$this->session->set_userdata($usuario);
 
 						$this->load->library("Token");
 						$token = new Token();

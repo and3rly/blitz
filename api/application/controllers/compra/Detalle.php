@@ -6,7 +6,7 @@ class Detalle extends CI_Controller {
 	{
 		parent::__construct();
 
-		$this->load->model(["compra/Detalle_model", "producto/Precio_model","compra/Compra_model"]);
+		$this->load->model(["compra/Detalle_model","compra/Compra_model"]);
 		$this->output->set_content_type('application/json');
 	}
 
@@ -28,7 +28,7 @@ class Detalle extends CI_Controller {
 	{
 		$data = [
 			"cat" => [
-				"productos" => $this->catalogo->ver_producto_precio($_GET),
+				"productos" => $this->catalogo->ver_productos($_GET),
 				"presentaciones" => $this->catalogo->ver_presentacion()
 			]
 		];
@@ -43,7 +43,42 @@ class Detalle extends CI_Controller {
 		if ($this->input->method() === "post") {
 			$datos = json_decode(file_get_contents("php://input"));
 
-			if (verPropiedad($datos, "cantidad") &&
+			if (verPropiedad($datos, "orden_compra_id") && 
+				verPropiedad($datos, "detalle")) {
+				
+				$contador = 0;
+
+				foreach ($datos->detalle as $row) {
+					$det = new Detalle_model($row->id);
+
+					$row->orden_compra_id = $datos->orden_compra_id;
+
+					if ($det->guardar($row)) {
+						$contador++;
+					}
+				}
+
+				if ($contador > 0) {
+					$data["exito"] = 1;
+					$data["mensaje"] = "Detalle guardado con éxito.";
+
+					$det->actualizaTotalOc([
+						"compra" => $datos->orden_compra_id
+					]);
+
+					$data["detalle"] = $det->_buscar([
+						"orden_compra_id" => $datos->orden_compra_id
+					]);
+
+					$data["compra"] = $this->Compra_model->_buscar([
+						"id" => $datos->orden_compra_id, 
+						"uno" => true
+					]);
+				}
+
+			}
+			
+			/*if (verPropiedad($datos, "cantidad") &&
 				verPropiedad($datos, "precio") &&
 				verPropiedad($datos, "costo") &&
 				verPropiedad($datos, "compra_id") && 
@@ -70,7 +105,7 @@ class Detalle extends CI_Controller {
 				}
 			} else {
 				$data["mensaje"] = "Complete todos los campos marcados con *.";
-			}
+			}*/
 		} else {
 			$this->output->set_status_header('405');
 		}

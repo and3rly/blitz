@@ -4,8 +4,7 @@ class Compra_model extends General_model {
 
 	public $correlativo;
 	public $documento;
-	public $referencia;
-	public $total;
+	public $total = 0;
 	public $observacion = null;
 	public $referencia = null;
 	public $proveedor_id;
@@ -15,28 +14,62 @@ class Compra_model extends General_model {
 	public $fecha_modificacion = null;
 	public $usuario_modifica = null;
 	public $moneda_id;
+	public $tipo_pago_id;
 
 	public function __construct($id="")
 	{
 		parent::__construct();
+		$this->setTabla("orden_compra");
+		$this->setLlave("id");
+
 		if (!empty($id)) {
 			$this->cargar($id);
 		}
 	}
 
-	public function set_correlativo()
+	public function get_correlativo()
 	{
+	    $tmp = $this->db
+	        ->select("IFNULL(MAX(correlativo), 0) + 1 AS correlativo", false)
+	        ->get("{$this->_tabla}")
+	        ->row()
+	        ->correlativo;
+
+	    $ctmp = str_pad($tmp, 10, "0", STR_PAD_LEFT);
+	    $cfinal = "OC" . $ctmp;
+
+	    return (object) [
+	        'correlativo' => $tmp,
+	        'documento'   => $cfinal
+	    ];
+	}
+
+	public function _buscar($args=[])
+	{
+		if (elemento($args, "id")) {
+			$this->db->where("a.id", $args["id"]);
+		} 
+
 		$tmp = $this->db
-		->select("IFNULL(max(correlativo),0)+1 as correlativo", false)
-		->get("{$this->_tabla}")
-		->row()->correlativo;
+		->select("
+			a.*,
+			b.nombre as nombre_proveedor,
+			c.nombre as nombre_sucursal,
+			d.nombre as nombre_moneda,
+			d.simbolo,
+			e.nombre as nombre_pago,
+			f.nombre as nombre_estado,
+			f.color
+		")
+		->join("proveedor b","b.id = a.proveedor_id")
+		->join("sucursal c","c.id = a.sucursal_id")
+		->join("moneda d","d.id = a.moneda_id")
+		->join("tipo_pago e","e.id = a.tipo_pago_id")
+		->join("estado_orden_compra f","f.id = a.estado_orden_compra_id")
+		->order_by("a.fecha", "desc")
+		->get("{$this->_tabla} a");
 
-		$this->correlativo = $tmp;
-
-		$ctmp = str_pad($tmp, 10, "0", STR_PAD_LEFT);
-		$cfinal = "OC" . $ctmp;
-
-		$this->documento = $cfinal;
+		return verConsulta($tmp, $args);
 	}
 }
 

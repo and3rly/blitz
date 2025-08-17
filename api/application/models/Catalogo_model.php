@@ -104,7 +104,7 @@ class Catalogo_model extends General_model {
 	{
 		$tmp  = $this->db
 		->where("activo", 1)
-		->get("compra_estado");
+		->get("estado_orden_compra");
 
 		return verConsulta($tmp, $args);
 	}
@@ -165,6 +165,34 @@ class Catalogo_model extends General_model {
 		$tmp  = $this->db
 		->where("activo", 1)
 		->get("rol");
+
+		return verConsulta($tmp, $args);
+	}
+
+	public function ver_productos($args=[])
+	{	
+		if (elemento($args, "sucursal")) {
+			$this->db->where("a.sucursal_id", $args["sucursal"]);
+		} else {
+			$this->db->where("a.sucursal_id", $_SESSION["sucursal_id"]);
+		}
+
+		$tmp = $this->db
+	    ->select("a.*, 
+	        b.nombre as nombre_producto,
+	        b.tipo as tipo_producto, 
+	        c.nombre as nombre_categoria, 
+	        c.etiqueta,
+	        d.nombre as nombre_unidad, 
+	        e.nombre as nombre_marca,
+	        1 as cantidad,
+	        b.imagen_key")
+	    ->join("producto b", "b.id = a.producto_id")
+	    ->join("categoria c", "c.id = b.categoria_id")
+	    ->join("unidad_medida d", "d.id = b.unidad_medida_id")
+	    ->join("marca e", "e.id = b.marca_id")
+	    ->where("a.activo", 1)
+	    ->get("producto_sucursal a");
 
 		return verConsulta($tmp, $args);
 	}

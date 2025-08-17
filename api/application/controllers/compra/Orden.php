@@ -27,12 +27,27 @@ class Orden extends CI_Controller {
 	{
 		$data = [
 			"cat" => [
-				"pago"   => $this->catalogo->ver_tipo_pago(),
-				"estado" => $this->catalogo->ver_compra_estado(),
-				"proveedor" => $this->catalogo->ver_proveedor(),
-				"establecimiento" => $this->catalogo->ver_establecimiento(),
-				"moneda" => $this->catalogo->ver_moneda()
-			]
+				"pagos"       => $this->catalogo->ver_tipo_pago(),
+				"estados"     => $this->catalogo->ver_compra_estado(),
+				"proveedores" => $this->catalogo->ver_proveedor(),
+				"sucursales"  => $this->catalogo->ver_sucursal(),
+				"monedas"     => $this->catalogo->ver_moneda()			]
+		];
+
+		$this->output->set_output(json_encode($data));
+	}
+
+	public function get_productos()
+	{
+		$this->output->set_output(json_encode([
+			"lista" => $this->catalogo->ver_productos()
+		]));
+	}
+
+	public function get_correlativo()
+	{
+		$data = [
+			"correlativo" => $this->Compra_model->get_correlativo()
 		];
 
 		$this->output->set_output(json_encode($data));
@@ -48,14 +63,10 @@ class Orden extends CI_Controller {
 			if (verPropiedad($datos, "referencia") &&
 				verPropiedad($datos, "tipo_pago_id") &&
 				verPropiedad($datos, "proveedor_id") &&
-				verPropiedad($datos, "establecimiento_id") &&
-				verPropiedad($datos, "compra_estado_id")) {
+				verPropiedad($datos, "sucursal_id") &&
+				verPropiedad($datos, "estado_orden_compra_id")) {
 
 				$compra = new Compra_model($id);
-
-				if (empty($id))	 {
-					$compra->set_correlativo();
-				}
 
 				if ($compra->guardar($datos)) {
 					$data["exito"] = 1;

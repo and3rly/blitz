@@ -18,13 +18,15 @@ class Producto_sucursal_model extends General_model {
 	{
 		if (elemento($args, "sucursal")) {
 			$this->db->where("a.sucursal_id", $args["sucursal"]);
+		} else {
+			$this->db->where("a.sucursal_id", $_SESSION["sucursal_id"]);
 		}
 
 		$tmp = $this->db
 		->select("
 			a.*,
-			a.id as producto_sucursal_id,
 			b.nombre as nombre_producto,
+			b.imagen_key,
 			c.nombre as nombre_marca,
 			d.nombre as nombre_categoria,
 			d.etiqueta

@@ -13,7 +13,7 @@ class General_model extends CI_Model {
 	{
 		parent::__construct();
 		$this->_tabla = $this->getTabla();
-		$this->usr    = $this->session->userdata('usuario');
+		$this->usr    = $this->session->userdata();
 	}
 
 	public function limpiarGeneral()
@@ -125,7 +125,7 @@ class General_model extends CI_Model {
 
 		if ($this->_pk === null) {
 			if (property_exists($this, 'usuario_id') && empty($this->usuario_id)) {
-				$this->usuario_id = $this->usr["id"];
+				$this->usuario_id = $this->usr["usuario_id"];
 			}
 
 			if (property_exists($this, 'empresa_id') && empty($this->empresa_id)) {
